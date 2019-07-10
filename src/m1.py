@@ -105,6 +105,7 @@ class CircleChanger(object):
         self.circle.fill_color = fill_color
         self.colors = colors
         self.original_color = fill_color
+        self.count = 0
 
     def __repr__(self):
         """
@@ -469,6 +470,14 @@ class CircleChanger(object):
         #   Second, READ the   run_test_change_to_next_color_in_tuple
         #   function (below).  Third, implement and test this method.
         ################################################################
+        if self.count == 0:
+            self.circle.fill_color = self.colors[0]
+        else:
+            self.count = self.count + 1
+            if self.count % len(self.colors) == 0:
+                self.count = 0
+            else:
+                self.circle.fill_color = self.colors[self.count]
 
 
 ########################################################################
