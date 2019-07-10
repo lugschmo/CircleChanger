@@ -241,7 +241,7 @@ class CircleChanger(object):
             :type amount_to_swell_or_shrink: int
         """
         ################################################################
-        # TODO: 4.
+        # DONE: 4.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_swell_or_shrink_once   function
         #   (below).  Third, implement and test this method.
@@ -269,6 +269,14 @@ class CircleChanger(object):
         #   Simply   ** ASK FOR HELP **
         #            if this does not make sense to you.
         ################################################################
+        if self.circle.radius + amount_to_swell_or_shrink < 1:
+            self.circle.radius = 1
+        else:
+            self.circle.radius = self.circle.radius + amount_to_swell_or_shrink
+        self.circle.outline_thickness = random.randrange(3, 16)
+        r_index = random.randrange(0, len(self.colors))
+        self.circle.fill_color = self.colors[r_index]
+
 
     def swell_or_shrink_repeatedly(self,
                                    amount_to_swell_or_shrink,
@@ -323,11 +331,16 @@ class CircleChanger(object):
             :type times_to_swell_or_shrink:  int
         """
         ################################################################
-        # TODO: 5.
+        # DONE: 5.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the  run_test_swell_or_shrink_repeatedly  function
         #   (below).  Third, implement and test this method.
         ################################################################
+        for _ in range(times_to_swell_or_shrink):
+            self.swell_or_shrink_once(amount_to_swell_or_shrink)
+            self.draw()
+            self.swell_or_shrink_once(-amount_to_swell_or_shrink)
+            self.draw()
 
     def swallow(self, other_circle_changer):
         """
@@ -355,7 +368,7 @@ class CircleChanger(object):
             :rtype CircleChanger
         """
         ################################################################
-        # TODO: 6.
+        # DONE: 6.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_swallow   function (below).
         #   Third, implement and test this method.
@@ -365,6 +378,12 @@ class CircleChanger(object):
         #   the center and radius of the new CircleChanger.
         #   NO CREDIT if you use the distance formula here.
         ################################################################
+        this_center = rg.Point(self.circle.center.x, self.circle.center.y)
+        other_center = rg.Point(other_circle_changer.circle.center.x, other_circle_changer.circle.center.y)
+        new_center = this_center.halfway_to(other_center)
+        new_radius = this_center.get_distance_from(other_center) / 2
+        new_colors = self.colors + other_circle_changer.colors
+        return CircleChanger(new_center.x, new_center.y, new_radius, 'red', new_colors)
 
     def change_color(self, index_of_color):
         """
