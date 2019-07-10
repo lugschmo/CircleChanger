@@ -83,7 +83,7 @@ class CircleChanger(object):
             :type fill_color: str
             :type colors: sequence of str
         """
-        self.animation_factor = 1  # Smaller => faster animations
+        self.animation_factor = 0.1  # Smaller => faster animations
         self.seconds_to_sleep = 0.5  # Default for each call to draw
         # --------------------------------------------------------------
         # Change the above "animation_factor" if the animations
@@ -465,19 +465,22 @@ class CircleChanger(object):
         fill color have no effect on or interaction with this method.
         """
         ################################################################
-        # TODO: 9.
+        # DONE: 9.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_change_to_next_color_in_tuple
         #   function (below).  Third, implement and test this method.
         ################################################################
         if self.count == 0:
             self.circle.fill_color = self.colors[0]
+            self.count = 1
         else:
-            self.count = self.count + 1
             if self.count % len(self.colors) == 0:
                 self.count = 0
+                self.circle.fill_color = self.colors[self.count]
+                self.count = 1
             else:
                 self.circle.fill_color = self.colors[self.count]
+                self.count = self.count + 1
 
 
 ########################################################################
